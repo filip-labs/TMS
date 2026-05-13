@@ -34,7 +34,7 @@ public class TransactionService {
         return all;
     }
 
-    private Transaction createTransaction(TransactionRequest request) throws IOException {
+    public Transaction createTransaction(TransactionRequest request) throws IOException {
         String accountNumber = TransactionInputSanitizer.trim(request.getAccountNumber());
         String accountHolderName = TransactionInputSanitizer.trim(request.getAccountHolderName());
         Transaction transaction = new Transaction(request.getTransactionDate(),accountNumber, accountHolderName, request.getAmount(), assignRandomStatus()
