@@ -1,0 +1,179 @@
+{
+	"info": {
+		"_postman_id": "91020433-b885-4871-9fc1-9190aabf9f8f",
+		"name": "Transaction Management System",
+		"description": "REST API collection for the Transaction Management System. Includes GET /transactions and POST /transactions with example request body and example responses.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "52529190",
+		"_collection_link": "https://filipnft-8132925.postman.co/workspace/Filip-'s-Workspace~95b3230c-2140-4103-8e7b-b5921977ff20/collection/52529190-91020433-b885-4871-9fc1-9190aabf9f8f?action=share&source=collection_link&creator=52529190"
+	},
+	"item": [
+		{
+			"name": "Get All Transactions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/transactions",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"transactions"
+					]
+				},
+				"description": "Returns the list of all transactions stored in the CSV file."
+			},
+			"response": [
+				{
+					"name": "200 OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/transactions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n  {\n    \"transactionDate\": \"2025-03-01\",\n    \"accountNumber\": \"7289-3445-1121\",\n    \"accountHolderName\": \"Maria Johnson\",\n    \"amount\": 150.00,\n    \"status\": \"Settled\"\n  },\n  {\n    \"transactionDate\": \"2025-03-02\",\n    \"accountNumber\": \"1122-3456-7890\",\n    \"accountHolderName\": \"John Smith\",\n    \"amount\": 75.50,\n    \"status\": \"Pending\"\n  }\n]"
+				}
+			]
+		},
+		{
+			"name": "Create Transaction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"transactionDate\": \"2025-05-12\",\n  \"accountNumber\": \"1234-5678-9012\",\n  \"accountHolderName\": \"Jane Doe\",\n  \"amount\": 250.75\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/transactions",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"transactions"
+					]
+				},
+				"description": "Creates a new transaction. The backend automatically assigns one of: Pending, Settled, Failed."
+			},
+			"response": [
+				{
+					"name": "201 Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"transactionDate\": \"2025-05-12\",\n  \"accountNumber\": \"1234-5678-9012\",\n  \"accountHolderName\": \"Jane Doe\",\n  \"amount\": 250.75\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/transactions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"transactionDate\": \"2025-05-12\",\n  \"accountNumber\": \"1234-5678-9012\",\n  \"accountHolderName\": \"Jane Doe\",\n  \"amount\": 250.75,\n  \"status\": \"Settled\"\n}"
+				},
+				{
+					"name": "400 Validation Error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accountNumber\": \"1234-5678-9012\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/transactions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "Text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"timestamp\": \"2025-05-12T10:00:00\",\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Validation failed\",\n  \"errors\": {\n    \"transactionDate\": \"transactionDate is required\",\n    \"accountHolderName\": \"accountHolderName is required\",\n    \"amount\": \"amount is required\"\n  }\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
