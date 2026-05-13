@@ -1,4 +1,7 @@
 package com.example.transactions.model;
 
-public class TransactionStatus {
+public enum TransactionStatus {
+    PENDING,
+    SETTLED,
+    FAILED;
 }
