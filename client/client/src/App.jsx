@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import './App.css';
 import TransactionTable from './components/TransactionTable.jsx';
 import AddTransactionModal from './components/AddTransactionModal.jsx';
 import { fetchTransactions, createTransaction } from './api/transactionsApi.js';
