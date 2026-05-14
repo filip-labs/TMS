@@ -73,4 +73,8 @@ public class TransactionRequest {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 }
