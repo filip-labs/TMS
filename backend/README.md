@@ -14,7 +14,7 @@ This module contains the Spring Boot backend for the Transaction Management Syst
 
 | Item         | Value                   |
 |--------------|-------------------------|
-| Framework    | Spring Boot 3.3.4       |
+| Framework    | Spring Boot 3.5.14      |
 | Language     | Java 21                 |
 | Build tool   | Maven                   |
 | Default port | `8080`                  |
@@ -52,11 +52,11 @@ java -jar target/transaction-management-0.0.1-SNAPSHOT.jar
 
 Main configuration is in [`src/main/resources/application.properties`](./src/main/resources/application.properties).
 
-| Property                   | Default value                                 | Notes                                                          |
-|----------------------------|-----------------------------------------------|----------------------------------------------------------------|
-| `server.port`              | `8080`                                        | Backend HTTP port                                              |
-| `app.csv.path`             | `./data/transactions.csv`                     | Relative to the working directory where the backend is started |
-| `app.cors.allowed-origins` | `http://localhost:5173,http://localhost:3000` | Allowed client origins                                         |
+| Property                   | Default value                                                                             | Notes                                                          |
+|----------------------------|-------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| `server.port`              | `8080`                                                                                    | Backend HTTP port                                              |
+| `app.csv.path`             | `./data/transactions.csv`                                                                 | Relative to the working directory where the backend is started |
+| `app.cors.allowed-origins` | `http://localhost:5173,http://127.0.0.1:5173,http://localhost:4173,http://127.0.0.1:4173` | Allowed local frontend origins                                 |
 
 ## CSV Storage
 
@@ -210,6 +210,15 @@ Current automated coverage includes:
 - `TransactionControllerTest`
 - `TransactionServiceTest`
 - `TransactionCsvRepositoryTest`
+
+These tests now cover:
+
+- random status assignment
+- trimmed input persistence
+- CSV escaping for commas and quotes
+- malformed row skipping
+- header-only file handling
+- cleanly append behavior when the CSV file has no trailing newline
 
 ## Important Packages and Classes
 

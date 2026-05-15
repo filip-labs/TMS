@@ -1,7 +1,6 @@
 package com.example.transactions.dto;
 
 import com.example.transactions.model.Transaction;
-import com.example.transactions.util.TransactionInputSanitizer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
@@ -18,8 +17,8 @@ public record TransactionResponse(
     public static TransactionResponse from(Transaction t) {
         return new TransactionResponse(
             t.getTransactionDate(),
-            TransactionInputSanitizer.escapeHtml(t.getAccountNumber()),
-            TransactionInputSanitizer.escapeHtml(t.getAccountHolderName()),
+            t.getAccountNumber(),
+            t.getAccountHolderName(),
             t.getAmount(),
             t.getStatus() == null ? null : t.getStatus().getDisplayName()
         );

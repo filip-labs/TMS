@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 const INITIAL_FORM_STATE = {
     transactionDate: '',
@@ -91,6 +91,12 @@ export default function AddTransactionModal({ isOpen, onClose, onSubmit }) {
             await onSubmit(submitPayload);
             onClose();
         } catch (error) {
+            if (error?.details && typeof error.details === 'object') {
+                setErrors((currentErrors) => ({
+                    ...currentErrors,
+                    ...error.details,
+                }));
+            }
             setFormError(error.message || 'Failed to create transaction.');
         } finally {
             setIsSubmitting(false);
@@ -109,6 +115,7 @@ export default function AddTransactionModal({ isOpen, onClose, onSubmit }) {
             ...currentErrors,
             [name]: undefined,
         }));
+        setFormError('');
     }
 
     return (

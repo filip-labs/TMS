@@ -40,9 +40,6 @@ class TransactionControllerTest {
 
     @BeforeEach
     void resetCsv() throws Exception {
-        // Reset the test CSV before every test so each test sees only seeded data.
-        // The shared singleton repository re-creates the file (with seeds) on the next
-        // read/write call via its ensureFileExists() guard.
         Path path = Path.of("./target/test-transactions.csv").toAbsolutePath().normalize();
         Files.deleteIfExists(path);
     }
@@ -62,13 +59,13 @@ class TransactionControllerTest {
         Files.writeString(
             path,
             "Transaction Date,Account Number,Account Holder Name,Amount,Status\n"
-                + "2025-05-12,1111-2222-3333,<script>alert(1)</script>,250.00,Pending\n",
+                + "2025-05-12,1111-2222-3333,\"Smith, Jane \"\"JJ\"\"\",250.00,Pending\n",
             StandardCharsets.UTF_8
         );
 
         mockMvc.perform(get("/transactions"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$[0].accountHolderName").value("&lt;script&gt;alert(1)&lt;/script&gt;"));
+            .andExpect(jsonPath("$[0].accountHolderName").value("Smith, Jane \"JJ\""));
     }
 
     @Test
@@ -88,18 +85,18 @@ class TransactionControllerTest {
     }
 
     @Test
-    void postTransactionRejectsXssLikePayload() throws Exception {
+    void postTransactionAcceptsCommaAndQuotesInAccountHolderName() throws Exception {
         Map<String, Object> request = new HashMap<>();
         request.put("transactionDate", "2025-05-12");
         request.put("accountNumber", "1111-2222-3333");
-        request.put("accountHolderName", "<script>alert(1)</script>");
+        request.put("accountHolderName", "Smith, Jane \"JJ\"");
         request.put("amount", 250.00);
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.errors.accountHolderName").exists());
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.accountHolderName").value("Smith, Jane \"JJ\""));
     }
 
     @Test
@@ -136,21 +133,6 @@ class TransactionControllerTest {
                 .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.errors.accountNumber").exists());
-    }
-
-    @Test
-    void postTransactionWithInvalidAccountHolderNameCharactersReturns400() throws Exception {
-        Map<String, Object> request = new HashMap<>();
-        request.put("transactionDate", "2025-05-12");
-        request.put("accountNumber", "1111-2222-3333");
-        request.put("accountHolderName", "Jane_123");
-        request.put("amount", 10.00);
-
-        mockMvc.perform(post("/transactions")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.errors.accountHolderName").exists());
     }
 
     @Test

@@ -12,7 +12,6 @@ import java.time.LocalDate;
 
 public class TransactionRequest {
     private static final String ACCOUNT_NUMBER_PATTERN = "^[\\p{L}\\p{N} _-]+$";
-    private static final String ACCOUNT_HOLDER_NAME_PATTERN = "^[\\p{L} .'-]+$";
 
     @NotNull(message = "TransactionDate is required!")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -30,10 +29,6 @@ public class TransactionRequest {
     @NotBlank(message = "AccountHolderName is required!")
     @Size(max = 100,
           message = "AccountHolderName must be at most 100 characters!")
-    @Pattern(
-        regexp = ACCOUNT_HOLDER_NAME_PATTERN,
-        message = "AccountHolderName may contain only letters, spaces, dots, apostrophes, and hyphens!"
-    )
     private String accountHolderName;
 
     @NotNull(message = "amount is required")

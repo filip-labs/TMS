@@ -1,6 +1,6 @@
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import {describe, expect, it, vi} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AddTransactionModal from '../AddTransactionModal.jsx';
 
@@ -81,5 +81,29 @@ describe('AddTransactionModal', () => {
         );
         await userEvent.click(screen.getByRole('button', { name: /create transaction/i }));
         expect(onSubmit).not.toHaveBeenCalled();
+    });
+
+    it('shows backend field errors when submit fails with validation details', async () => {
+        const error = new Error('Validation failed');
+        error.details = {
+            accountHolderName: 'Account holder name is invalid.',
+        };
+
+        const onSubmit = vi.fn().mockRejectedValue(error);
+
+        render(
+            <AddTransactionModal isOpen={true} onClose={() => {
+            }} onSubmit={onSubmit}/>
+        );
+
+        await userEvent.type(screen.getByLabelText(/Transaction Date/i), '2025-05-12');
+        await userEvent.type(screen.getByLabelText(/Account Number/i), '1234-5678-9012');
+        await userEvent.type(screen.getByLabelText(/Account Holder Name/i), 'Jane Doe');
+        await userEvent.type(screen.getByLabelText(/Amount/i), '100');
+
+        await userEvent.click(screen.getByRole('button', {name: /create transaction/i}));
+
+        expect(await screen.findByText('Validation failed')).toBeInTheDocument();
+        expect(await screen.findByText('Account holder name is invalid.')).toBeInTheDocument();
     });
 });

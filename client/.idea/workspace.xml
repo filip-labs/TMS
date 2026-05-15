@@ -4,10 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7595f72-b718-4ddd-979b-74bfdc37a135" name="Changes" comment="Added all UI components tests">
+    <list default="true" id="e7595f72-b718-4ddd-979b-74bfdc37a135" name="Changes" comment="Add all documentation and update README">
+      <change afterPath="$PROJECT_DIR$/../backend/src/test/resources/mockito-extensions/org.mockito.plugins.MockMaker" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/.env.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/App.test.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/com/example/transactions/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/com/example/transactions/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/com/example/transactions/dto/TransactionRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/com/example/transactions/dto/TransactionRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/com/example/transactions/dto/TransactionResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/com/example/transactions/dto/TransactionResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/com/example/transactions/repository/TransactionCsvRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/com/example/transactions/repository/TransactionCsvRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/com/example/transactions/util/TransactionInputSanitizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/com/example/transactions/util/TransactionInputSanitizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/test/java/com/example/transactions/controller/TransactionControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/test/java/com/example/transactions/controller/TransactionControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/test/java/com/example/transactions/repository/TransactionCsvRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/test/java/com/example/transactions/repository/TransactionCsvRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AddTransactionModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AddTransactionModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/__tests__/AddTransactionModal.test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/__tests__/AddTransactionModal.test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +33,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="3" />
+    <option name="cachedIndexableFilesCount" value="30" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -26,6 +44,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "filip-labs"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/filip-labs/TMS.git",
+    "accountId": "bda5e290-e3b1-4fd3-bd90-3acbb7f5c028"
+  }
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -53,10 +83,10 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "18-finalize-documentation",
+    "git-widget-placeholder": "main",
     "git.auto.fetch.suggestion.counter": "3",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/filip-cvetkovic/IdeaProjects/TMS/README.md",
+    "last_opened_file_path": "/home/filip-cvetkovic/IdeaProjects/TMS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -73,6 +103,8 @@
       <option name="presentableId" value="Default" />
       <updated>1778756061709</updated>
       <workItem from="1778756062973" duration="661000" />
+      <workItem from="1778838552045" duration="453000" />
+      <workItem from="1778840789238" duration="213000" />
     </task>
     <task id="LOCAL-00001" summary="FE initial commit">
       <option name="closed" value="true" />
@@ -98,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778767681629</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add all documentation and update README">
+      <option name="closed" value="true" />
+      <created>1778838594970</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1778838594970</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -111,6 +151,7 @@
     <MESSAGE value="Added all UI components and styles" />
     <MESSAGE value="Added all UI components tests" />
     <MESSAGE value="dokumentacija" />
-    <option name="LAST_COMMIT_MESSAGE" value="dokumentacija" />
+    <MESSAGE value="Add all documentation and update README" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add all documentation and update README" />
   </component>
 </project>

@@ -10,10 +10,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.channels.SeekableByteChannel;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -83,8 +85,10 @@ public class TransactionCsvRepository {
         try (BufferedWriter writer = Files.newBufferedWriter(
             csvPath,
             StandardCharsets.UTF_8,
+            StandardOpenOption.WRITE,
             StandardOpenOption.APPEND
         )) {
+            appendLineBreakIfNeeded(writer);
             writer.write(line);
             writer.newLine();
         }
@@ -243,6 +247,32 @@ public class TransactionCsvRepository {
 
         if (transaction.getStatus() == null) {
             throw new IllegalArgumentException("Status must not be null!");
+        }
+    }
+
+    private void appendLineBreakIfNeeded(BufferedWriter writer) throws IOException {
+        if (Files.size(csvPath) == 0 || endsWithLineBreak()) {
+            return;
+        }
+
+        writer.newLine();
+    }
+
+    private boolean endsWithLineBreak() throws IOException {
+        long size = Files.size(csvPath);
+
+        if (size == 0) {
+            return false;
+        }
+
+        try (SeekableByteChannel channel = Files.newByteChannel(csvPath, StandardOpenOption.READ)) {
+            channel.position(size - 1);
+            ByteBuffer buffer = ByteBuffer.allocate(1);
+            channel.read(buffer);
+            buffer.flip();
+
+            byte lastByte = buffer.get();
+            return lastByte == '\n' || lastByte == '\r';
         }
     }
 }

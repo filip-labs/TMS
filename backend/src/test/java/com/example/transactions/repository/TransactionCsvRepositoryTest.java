@@ -94,6 +94,66 @@ class TransactionCsvRepositoryTest {
 
         assertThatThrownBy(() -> repository.save(newTx))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("accountHolderName must not contain line breaks");
+            .hasMessageContaining("accountHolderName must not contain line breaks");
+    }
+
+    @Test
+    void findAllReturnsEmptyListForHeaderOnlyFile() throws IOException {
+        Files.writeString(csvPath, TransactionCsvRepository.CSV_HEADER);
+
+        List<Transaction> transactions = repository.findAll();
+
+        assertThat(transactions).isEmpty();
+    }
+
+    @Test
+    void findAllSkipsMalformedRowsAndParsesEscapedValues() throws IOException {
+        Files.writeString(
+            csvPath,
+            TransactionCsvRepository.CSV_HEADER + System.lineSeparator()
+                + "2025-05-01,1111-2222-3333,\"Smith, Jane \"\"JJ\"\"\",50.25,Pending" + System.lineSeparator()
+                + "bad,row" + System.lineSeparator()
+                + "2025-05-02,2222-3333-4444,Normal Name,12.00,Settled" + System.lineSeparator()
+        );
+
+        List<Transaction> transactions = repository.findAll();
+
+        assertThat(transactions).hasSize(2);
+        assertThat(transactions.getFirst().getAccountHolderName()).isEqualTo("Smith, Jane \"JJ\"");
+        assertThat(transactions.getLast().getStatus()).isEqualTo(TransactionStatus.SETTLED);
+    }
+
+    @Test
+    void saveEscapesCommaAndQuotesInAccountHolderName() throws IOException {
+        Transaction newTx = new Transaction(
+            LocalDate.of(2025, 4, 3),
+            "1234-5678-9012",
+            "Smith, Jane \"JJ\"",
+            new BigDecimal("10.00"),
+            TransactionStatus.SETTLED
+        );
+
+        repository.save(newTx);
+
+        String csvContents = Files.readString(csvPath);
+        assertThat(csvContents).contains("\"Smith, Jane \"\"JJ\"\"\"");
+        assertThat(repository.findAll().getLast().getAccountHolderName()).isEqualTo("Smith, Jane \"JJ\"");
+    }
+
+    @Test
+    void saveAppendsCleanlyToHeaderOnlyFileWithoutTrailingLineBreak() throws IOException {
+        Files.writeString(csvPath, TransactionCsvRepository.CSV_HEADER);
+
+        repository.save(new Transaction(
+            LocalDate.of(2025, 4, 4),
+            "9999-8888-7777",
+            "Header Only",
+            new BigDecimal("20.00"),
+            TransactionStatus.FAILED
+        ));
+
+        List<String> lines = Files.readAllLines(csvPath);
+        assertThat(lines).hasSize(2);
+        assertThat(lines.get(1)).contains("Header Only");
     }
 }
